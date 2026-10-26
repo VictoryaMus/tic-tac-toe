@@ -67,23 +67,23 @@ datasource/ Persistence: SQLAlchemy models, repositories, DTO mappers
   this layer and the repository — nothing above it changed.
 
 ### Data flow: making a move
-Browser POST /game/<id> (form: cell=4)
-│
-▼
-main.py reads request.form, calls container
-│
-▼
-Container play_turn(game_id, row, col, user_id)
-├─ loads game from DB via repository (GameRow → GameDTO → Game)
-├─ GameService.make_move (domain logic)
-├─ if vs bot and it's O's turn:
-│ GameService.get_next_move (minimax, clone-based)
-│ GameService.make_move
-├─ saves game back (Game → GameDTO → GameRow)
-└─ if game over: writes to completed_games
-│
-▼
-Redirect 302 → GET /game/<id> → renders template
+Browser POST /game/<id> (form: cell=4)  
+│  
+▼  
+main.py reads request.form, calls container  
+│  
+▼  
+Container play_turn(game_id, row, col, user_id)  
+├─ loads game from DB via repository (GameRow → GameDTO → Game)  
+├─ GameService.make_move (domain logic)  
+├─ if vs bot and it's O's turn:  
+│ GameService.get_next_move (minimax, clone-based)  
+│ GameService.make_move  
+├─ saves game back (Game → GameDTO → GameRow)  
+└─ if game over: writes to completed_games  
+│  
+▼  
+Redirect 302 → GET /game/<id> → renders template  
 
 For a human-vs-human game, the opponent's browser polls
 `GET /game/<id>/state` every 2 seconds and reloads when the board
