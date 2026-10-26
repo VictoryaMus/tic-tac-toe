@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Available rooms</h1>
+{% if rooms %}
+<table>
+    <tr><th>Game ID</th><th>Host</th><th>Created</th><th></th></tr>
+    {% for r in rooms %}
+        <tr>
+            <td><code>{{ r.id }}</code></td>
+            <td>{{ r.host_login }}</td>
+            <td>{{ r.created_at }}</td>
+            <td>
+                <form method="post" action="/lobby/join">
+                    <input type="hidden" name="game_id" value="{{ r.id }}">
+                    <button type="submit">Join</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No rooms available right now.</p>
+{% endif %}
+<a href="/lobby">Back to lobby</a>
+{% endblock %}

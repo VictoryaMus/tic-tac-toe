@@ -1,0 +1,38 @@
+.game_board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px); 
+    width: 300px;
+    gap: 0;
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.container .box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    font-size: 85px;
+    text-align: center;
+    line-height: 100px;
+    cursor: pointer;
+    background: none;          /* убрать стиль кнопки */
+    padding: 0;                /* убрать отступы кнопки */
+    box-sizing: border-box;    /* border внутри размера */
+    transition: all .25s ease-in-out;
+}
+
+.container .box:hover:not(:disabled) {
+    background: rgb(174, 244, 255);
+    color: rgb(108, 108, 108);
+}
+
+.container .box:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}

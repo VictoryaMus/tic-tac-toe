@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Tic-tac-toe{% endblock %}
+
+{% block body %}
+<h1>Your score</h1>
+<table class="table">
+    <thead><tr><th>Game</th><th>Player</th><th>Winner</th></tr></thead>
+    <tbody>
+    {% for s in scores %}
+        <tr>
+            <td>{{ s.game_id }}</td>
+            <td>{{ s.player }}</td>
+            <td>{{ s.winner }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

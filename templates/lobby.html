@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Lobby</h1>
+
+<div class="card">
+    <h2>Create a new game</h2>
+    <form method="post" action="/lobby/create">
+        <button name="opponent" value="bot">Play vs Computer</button>
+        <button name="opponent" value="user">Play vs Human (wait for opponent)</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Join a game</h2>
+    <a href="/lobby/rooms" class="btn">See available rooms</a>
+    <form method="post" action="/lobby/join">
+        <input name="game_id" placeholder="Enter game UUID" required>
+        <button type="submit">Join</button>
+    </form>
+</div>
+{% endblock %}

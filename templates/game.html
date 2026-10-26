@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<form method="POST" action="/game/{{ game.id }}">
+<div class="game-wrapper">
+    <span id="turn">
+    {% if game.state == "draw" %}
+        🤝 Draw!
+    {% elif game.state == "win" %}
+        {% if winner_label == "Bot" %}
+            🤖 Bot wins!
+        {% elif winner_label %}
+            🏆 {{ winner_label }} wins!
+        {% else %}
+            🏆 Someone wins!
+        {% endif %}
+    {% else %}
+        Tic Tac Toe - {{ game.current_player }}'s turn
+    {% endif %}
+    </span>
+</div>
+    <div class="game_board">
+        {% for i in range(3) %}
+            {% for j in range(3) %}
+                {% set cell = game.board.board[i][j] %}
+                {% set value = i * 3 + j %}
+                <button type="submit" name="cell" value="{{ value }}"
+                        class="box"
+                        {% if game.is_over or cell != ' ' %}disabled{% endif %}>
+                    {{ cell if cell != ' ' else '' }}
+                </button>
+            {% endfor %}
+        {% endfor %}
+        </div>
+
+</form>
+
+<script>
+    const GAME_ID = "{{ game.id }}";
+    const CURRENT_BOARD = {{ game.board.board | tojson }};
+    const STATE = "{{ game.state }}";
+
+    if (STATE === "in_progress" || STATE === "waiting") {
+        setInterval(async () => {
+            try {
+                const res = await fetch(`/game/${GAME_ID}/state`);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (JSON.stringify(data.board) !== JSON.stringify(CURRENT_BOARD)) {
+                    window.location.reload();
+                }
+            } catch (_) {}
+        }, 2000);
+    }
+</script>
+{% endblock %}
